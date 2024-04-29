@@ -1,0 +1,9 @@
+CREATE TABLE views (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    user_id INTEGER NOT NULL,
+    view TEXT NOT NULL,
+    imdb_id TEXT NOT NULL,
+    date TEXT NOT NULL,
+    time TEXt NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);

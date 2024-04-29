@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+
+        <!-- http://getbootstrap.com/docs/5.1/ -->
+        <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+        <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+        <!-- https://favicon.io/emoji-favicons/money-bag/ -->
+        <link href="/static/favicon.ico" rel="icon">
+
+        <link href="/static/styles.css" rel="stylesheet">
+
+        <title>Moview: {% block title %}{% endblock %}</title>
+
+    </head>
+
+    <body>
+
+        <nav class="border navbar navbar-expand-md navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <img src="static/logo.png " alt="Logo" width="100" height="50" class="d-inline-block align-text-top">
+                </a>
+                <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    {% if session["user_id"] %}
+                        <ul class="navbar-nav me-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/myprofile">My Profile</a></li>
+                        </ul>
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        {% if get_flashed_messages() %}
+            <header>
+                <div class="alert alert-primary mb-0 text-center" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}
+
+        <main class="container-fluid py-5 text-center">
+            {% if session["user_id"] %}
+                <form action="/share_view" method="post">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="movie-title" name="movie-title" autocomplete="off" placeholder="Search Movie Title" onkeyup="findMovies()" onclick = "findMovies()">
+                        <label for="movie-title">Search Movie Title</label>
+                    </div>
+
+                    <div class = "search-list" id = "search-list">
+                        <!-- list here -->
+                        <!-- <div class = "search-list-item">
+                            <div class = "search-item-thumbnail">
+                                <img src = "movie-cover.jpg">
+                            </div>
+                            <div class = "search-item-info">
+                                <h3>Movie Name</h3>
+                                <p>Release Year</p>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Share View" id="view" name="view"></textarea>
+                        <label for="share-view">Share View</label>
+                    </div>
+                    <br>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="submit">Share</button>
+                    </div>
+                </form>
+                <br>
+            {% endif %}
+            {% block main %}{% endblock %}
+        </main>
+
+        <footer class="mb-5 small text-center text-muted">
+            Data provided by <a href="https://www.omdbapi.com/">OMDb</a>
+        </footer>
+
+        {% if session["user_id"] %}
+            <script src = "static/script.js"></script>
+        {% endif %}
+    </body>
+
+</html>

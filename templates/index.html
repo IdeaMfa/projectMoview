@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Feed
+{% endblock %}
+
+{% block main %}
+    {% for i in range(length) %}
+    <div class="projcard projcard-blue">
+		<div class="projcard-innerbox">
+			<img class="projcard-img" src="{{info[i].Poster}}" />
+			<div class="projcard-textbox">
+				<div class="projcard-title">User Name: {{ views[i].username }}</div>
+                <div class="projcard-title">Movie Title: {{info[i].Title}}</div>
+				<div class="projcard-subtitle">View Date: {{ views[i].date }}--{{ views[i].time }}</div>
+				<div class="projcard-bar"></div>
+				<div class="projcard-description">{{ views[i].view }}</div>
+				<div class="projcard-tagbox">
+				</div>
+			</div>
+		</div>
+	</div>
+    {% endfor %}
+{% endblock %}
